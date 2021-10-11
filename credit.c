@@ -40,7 +40,7 @@ int main(void)
         fsum = sum1 + sum2;
         dcdc++;
     }
-    while (dcdc < dc);
+    while (dcdc <= dc);
     ccc = cc;
     
     fsum = fsum % 10;
