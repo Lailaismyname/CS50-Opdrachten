@@ -1,6 +1,8 @@
-//This program checks wether a creditcard number is valid and to which creditcardcompany it belongs. 
+//This program checks wether a creditcard number is valid and to which creditcardcompany it belongs.
 #include <cs50.h>
 #include <stdio.h>
+//ff checken met fsum als global variable
+int fsum;
 
 int main(void)
 //step 1 ask cc nr.
@@ -8,7 +10,7 @@ int main(void)
     //cc = creditcard number. ccc= copycreditcard nr. (voor reset cc)
     long long cc = get_long_long("Please submit your credit card number: \n");
     long long ccc = cc;
-    //stap 2. int dc = Digit Counter. stap 2 reken het aantal getallen van cc uit. 
+    //stap 2. int dc = Digit Counter. stap 2 reken het aantal getallen van cc uit.
     int dc = 0;
     while (cc != 0)
     {
@@ -20,7 +22,6 @@ int main(void)
     // stap 3 luhn's algorithm. int l = Laatste; int el = Éen a Laatste;
     int l;
     int el;
-    int fsum;
     int sum1 = 0;
     int sum2 = 0;
     int dcdc = 0;
@@ -42,70 +43,57 @@ int main(void)
     }
     while (dcdc <= dc);
     ccc = cc;
-    
     fsum = fsum % 10;
-    
-    
-    if (fsum == 0)
+
+    //check if card is amex
+    if (dc == 15 && fsum == 0)
     {
-        if (dc == 15)
+        int amex;
+        for (amex = 0; amex <= 12; amex++)
         {
-            int amex;
-            for (amex = 0; amex <= 12; amex++)
+            cc = cc / 10;
+            if (cc == 34 || cc == 37)
             {
-                cc = cc / 10;
-                if (cc == 34 || cc == 37)
-                {
-                    printf("AMEX\n");
-                }
+                printf("AMEX\n");
             }
         }
-
-
-
-
-        // Check if is mastercard or visa
-        else if (dc == 16)
+    }
+    // Check if card is mastercard or visa
+    else if (dc == 16 && fsum == 0)
+    {
+        int mc;
+        for (mc = 0; mc <= 13; mc++)
         {
-            int mc;
-            for (mc = 0; mc <= 13; mc++)
+            cc = cc / 10;
+            if (cc == 51 || cc == 52 || cc == 53 || cc == 54 || cc == 55)
             {
-                cc = cc / 10;
-                if (cc == 51 || cc == 52 || cc == 53 || cc == 54 || cc == 55)
-                {
-                    printf("MASTERCARD\n");
-                }
-                //check if visa
-                if (cc / 10 == 4)
-                {
-                    printf("VISA\n");
-                }
-
+                printf("MASTERCARD\n");
             }
-        }
-        //check if visa
-
-        else  if (dc == 13)
-        {
-            //Check if visa
-            int v;
-            for (v = 0; v <= 11; v++)
+            //check if visa
+            if (cc / 10 == 4)
             {
-                cc = cc / 10;
-                if (cc == 4)
-                {
-                    printf("VISA\n");
-                }
+                printf("VISA\n");
             }
 
         }
     }
-    else 
+    //check if visa
+    else  if (dc == 13 && fsum == 0)
+    {
+        int v;
+        for (v = 0; v <= 11; v++)
+        {
+            cc = cc / 10;
+            if (cc == 4)
+            {
+                printf("VISA\n");
+            }
+        }
+    }
+    else
     {
         printf("INVALID\n");
     }
-    
+
 }
 
-
-//werkt niet helemaal naar behoren maar herkent iig wel de creditcard maatschappijen. Kom hier later op terug. 
