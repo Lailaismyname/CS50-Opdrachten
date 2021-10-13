@@ -1,7 +1,7 @@
 //This program checks wether a creditcard number is valid and to which creditcardcompany it belongs.
 #include <cs50.h>
 #include <stdio.h>
-//ff checken met fsum als global variable
+
 int fsum;
 
 int main(void)
